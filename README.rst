@@ -49,6 +49,11 @@ For the impatient:
 
 http://autotest.readthedocs.org/en/latest/main/local/ClientQuickStart.html
 
+New to the repo? Start with the in-repo quickstart and guidebook:
+
+* `QUICKSTART.md <QUICKSTART.md>`_
+* `GUIDEBOOK.md <GUIDEBOOK.md>`_
+
 Installing the autotest server
 ------------------------------
 
@@ -128,5 +133,4 @@ Downloading stable versions
 ---------------------------
 
 https://github.com/autotest/autotest/releases
-
 
