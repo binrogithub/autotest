@@ -1,0 +1,5 @@
+# Example policy configuration
+allowed_tools:
+  - preview
+  - apply
+allow_write: false
