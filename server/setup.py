@@ -51,7 +51,8 @@ def get_packages():
 
 
 def get_scripts():
-    return [server_dir + '/autotest-remote']
+    return [server_dir + '/autotest-remote',
+            server_dir + '/hc-run-demo']
 
 
 def run():

@@ -17,6 +17,7 @@ import tko.setup
 import utils.setup
 import mirror.setup
 import installation_support.setup
+import mcp.setup
 
 # pylint: disable=E0611
 from distutils.core import setup
@@ -74,7 +75,8 @@ def get_package_dir():
                            database_legacy.setup.get_package_dir(),
                            tko.setup.get_package_dir(),
                            utils.setup.get_package_dir(),
-                           mirror.setup.get_package_dir()])
+                           mirror.setup.get_package_dir(),
+                           mcp.setup.get_package_dir()])
 
 
 def get_packages():
@@ -88,6 +90,7 @@ def get_packages():
             tko.setup.get_packages() +
             utils.setup.get_packages() +
             mirror.setup.get_packages() +
+            mcp.setup.get_packages() +
             installation_support.setup.get_packages())
 
 
@@ -106,7 +109,8 @@ def get_package_data():
         _fix_data_paths(server.setup.get_package_data()),
         _fix_data_paths(scheduler.setup.get_package_data()),
         _fix_data_paths(database_legacy.setup.get_package_data()),
-        _fix_data_paths(utils.setup.get_package_data())
+        _fix_data_paths(utils.setup.get_package_data()),
+        _fix_data_paths(mcp.setup.get_package_data())
     ])
 
 

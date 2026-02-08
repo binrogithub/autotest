@@ -9,37 +9,31 @@ except ImportError:
 
 from autotest.client.shared import version
 
-# Mostly needed when called one level up
-if os.path.isdir('cli'):
-    cli_dir = 'cli'
+if os.path.isdir('mcp'):
+    mcp_dir = 'mcp'
 else:
-    cli_dir = '.'
+    mcp_dir = '.'
 
 
 def get_package_dir():
-    return {'autotest.cli': cli_dir}
-
-
-def get_package_data():
-    return {'autotest.cli': ['contrib/*']}
+    return {'autotest.mcp': mcp_dir}
 
 
 def get_packages():
-    return ['autotest.cli']
+    return ['autotest.mcp']
+
+
+def get_package_data():
+    return {}
 
 
 def get_scripts():
-    return [cli_dir + '/autotest-rpc-client',
-            cli_dir + '/autotest-rpc-change-protection-level',
-            cli_dir + '/autotest-rpc-migrate-host',
-            cli_dir + '/autotest-rpc-query-keyvals',
-            cli_dir + '/autotest-rpc-query-results',
-            cli_dir + '/hc-run']
+    return []
 
 
 def run():
     setup(name='autotest',
-          description='Autotest framework - CLI interface to the RPC server',
+          description='Autotest framework - MCP package',
           maintainer='Lucas Meneghel Rodrigues',
           maintainer_email='lmr@redhat.com',
           version=version.get_version(),

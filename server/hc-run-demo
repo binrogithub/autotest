@@ -1,0 +1,12 @@
+#!/usr/bin/python -u
+
+try:
+    import autotest.common as common
+except ImportError:
+    import common
+
+from autotest.mcp import server_core
+
+
+if __name__ == '__main__':
+    server_core.hc_run_demo()
