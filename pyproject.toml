@@ -1,0 +1,4 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+norecursedirs = ["client", "frontend", "utils", "results", "venv", ".venv", "build", "dist", ".git", "__pycache__"]
