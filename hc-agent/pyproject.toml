@@ -1,0 +1,97 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "hc-agent"
+version = "0.1.0"
+description = "AI-first Huawei Cloud automation agent with CLI and MCP support"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary / PoC" }
+
+authors = [
+  { name = "Huawei Cloud Solution Architecture Team" }
+]
+
+keywords = [
+  "huawei-cloud",
+  "mcp",
+  "ai-agent",
+  "cloud-automation",
+  "devops",
+  "aiops",
+  "preview-apply",
+  "infrastructure-as-code"
+]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: System :: Distributed Computing",
+  "Topic :: System :: Systems Administration",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12"
+]
+
+
+[project.dependencies]
+# --- Core ---
+requests = ">=2.31.0"
+pyyaml = ">=6.0"
+pydantic = ">=2.5"
+
+# --- CLI ---
+click = ">=8.1"
+
+# --- MCP / JSON-RPC ---
+fastapi = ">=0.110"
+uvicorn = ">=0.27"
+
+# --- Utilities ---
+python-dateutil = ">=2.9"
+rich = ">=13.7"
+
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "pytest-asyncio>=0.23",
+  "ruff>=0.3",
+  "mypy>=1.8",
+]
+
+docs = [
+  "mkdocs>=1.5",
+  "mkdocs-material>=9.5"
+]
+
+
+[project.scripts]
+hc-agent = "hc_agent.cli.main:main"
+
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["hc_agent*"]
+
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "F", "I"]
+ignore = ["E203"]
+
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true

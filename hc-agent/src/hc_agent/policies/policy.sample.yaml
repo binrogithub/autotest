@@ -1,0 +1,50 @@
+#
+# Policy file for hc-agent MCP/CLI execution.
+# Defines tenant-level allowlists and risk/write gates.
+
+version: 1
+
+defaults:
+  # Default maximum risk level allowed for this tenant.
+  # Supported values: low, medium, high
+  risk_max: "medium"
+
+  # Whether write operations (apply) are allowed.
+  allow_write: false
+
+  # Whether legacy tools are exposed (not recommended for demo tenants).
+  expose_legacy_tools: false
+
+  # Tool allowlist (MCP-exposed tools)
+  allowed_tools:
+    - "hc_tools_search"
+    - "hc_run"
+    - "hc_run_demo"
+    - "hc_doctor_fix"
+    - "hc_reload_registry"
+
+tenants:
+  # Demo tenant: safe by default
+  demo:
+    risk_max: "medium"
+    allow_write: false
+    expose_legacy_tools: false
+    allowed_tools:
+      - "hc_tools_search"
+      - "hc_run"
+      - "hc_run_demo"
+      - "hc_doctor_fix"
+
+  # Ops tenant: can apply changes
+  ops:
+    risk_max: "high"
+    allow_write: true
+    expose_legacy_tools: true
+    allowed_tools:
+      - "hc_tools_search"
+      - "hc_run"
+      - "hc_run_demo"
+      - "hc_doctor_fix"
+      - "hc_reload_registry"
+      - "hc_admin_gc_runs"
+      - "hc_admin_delete_run"

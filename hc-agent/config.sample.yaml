@@ -1,0 +1,124 @@
+# =========================================================
+# hc-agent sample configuration (v1)
+# =========================================================
+# This file defines the minimal runtime context for hc-agent.
+# Sensitive credentials (AK/SK) should NOT be stored here.
+# Use environment variables instead.
+# =========================================================
+
+version: 1
+
+# ---------------------------------------------------------
+# Runtime context
+# ---------------------------------------------------------
+context:
+  # Default Huawei Cloud region
+  # Can be overridden by CLI or MCP input
+  region: "sa-brazil-1"
+
+  # Huawei Cloud project ID
+  # Required for ECS / RDS / EVS APIs
+  # Recommended to set explicitly
+  project_id: ""
+
+  # Disable interactive prompts (recommended for AI/MCP)
+  non_interactive: true
+
+
+# ---------------------------------------------------------
+# Endpoint configuration
+# ---------------------------------------------------------
+endpoint:
+  # Whether to use Huawei Cloud Stack Online (HCSO)
+  use_hcso: false
+
+  # Base domain for public Huawei Cloud
+  base_domain: "myhuaweicloud.com"
+
+  # Base domain for HCSO (required if use_hcso = true)
+  hcso_base_domain: ""
+
+  # Endpoint template for public cloud
+  # Available variables: {service}, {region}, {base}
+  endpoint_template_public: "{service}.{region}.{base}"
+
+  # Endpoint template for HCSO
+  # Usually the same as public cloud, but configurable
+  endpoint_template_hcso: "{service}.{region}.{base}"
+
+
+# ---------------------------------------------------------
+# Authentication
+# ---------------------------------------------------------
+auth:
+  # DO NOT store access keys here in production.
+  # Use environment variables instead:
+  #   HC_ACCESS_KEY / HC_SECRET_KEY
+  #   or HC_AK / HC_SK
+  access_key: ""
+  secret_key: ""
+
+  # Cache IAM tokens to reduce authentication calls
+  iam_token_cache: true
+
+
+# ---------------------------------------------------------
+# Default resource selection (used by doctor auto-fix)
+# ---------------------------------------------------------
+defaults:
+  network:
+    # Explicit default network resources (highest priority)
+    vpc_id: ""
+    subnet_id: ""
+    security_group_id: ""
+
+    # Preferred resource tags for automatic selection
+    prefer_tags:
+      hc-agent-default: "true"
+
+    # Preferred name keywords (case-insensitive)
+    prefer_name_keywords:
+      - "hc-agent"
+      - "poc"
+      - "default"
+
+
+# ---------------------------------------------------------
+# Demo orchestration defaults
+# ---------------------------------------------------------
+demo:
+  network:
+    # Security group created during demo
+    sg_name: "poc-sg"
+    sg_description: "Security group created by hc-agent demo"
+
+  storage:
+    # OBS bucket name will be:
+    #   <bucket_name_prefix>-<run_id_suffix>
+    bucket_name_prefix: "poc-hc-agent"
+    bucket_acl: "private"
+
+  compute:
+    # ECS name will be:
+    #   <name_prefix>-<run_id_suffix>
+    name_prefix: "poc-ecs"
+
+    # ECS flavor ID (optional; can be auto-selected)
+    flavor: ""
+
+    # Image ID (recommended to set explicitly)
+    image_id: ""
+
+    # SSH keypair name (optional)
+    keypair_name: ""
+
+
+# ---------------------------------------------------------
+# Notes
+# ---------------------------------------------------------
+# - CLI arguments always override this file.
+# - MCP calls also override this file.
+# - doctor auto-fix fills missing values deterministically.
+# - preview mode NEVER creates real resources.
+# - apply mode always requires explicit approval.
+# =========================================================
