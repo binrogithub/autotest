@@ -17,9 +17,10 @@ import tko.setup
 import utils.setup
 import mirror.setup
 import installation_support.setup
+import hc_agent.setup
 
 # pylint: disable=E0611
-from distutils.core import setup
+from setuptools import setup
 
 from sphinx.setup_command import BuildDoc
 cmdclass = {'build_doc': BuildDoc}
@@ -47,6 +48,9 @@ def _fix_data_paths(package_data_dict):
     result = {}
     for package_name, package_content in package_data_dict.items():
         package_structure = package_name.split('.')
+        if len(package_structure) < 2:
+            result[package_name] = list(package_content)
+            continue
         package_structure_1st_level = package_structure[1]
 
         result[package_name] = []
@@ -69,6 +73,7 @@ def get_package_dir():
                            shared.setup.get_package_dir(),
                            frontend.setup.get_package_dir(),
                            cli.setup.get_package_dir(),
+                           hc_agent.setup.get_package_dir(),
                            server.setup.get_package_dir(),
                            scheduler.setup.get_package_dir(),
                            database_legacy.setup.get_package_dir(),
@@ -82,6 +87,7 @@ def get_packages():
             shared.setup.get_packages() +
             frontend.setup.get_packages() +
             cli.setup.get_packages() +
+            hc_agent.setup.get_packages() +
             server.setup.get_packages() +
             scheduler.setup.get_packages() +
             database_legacy.setup.get_packages() +
@@ -106,7 +112,8 @@ def get_package_data():
         _fix_data_paths(server.setup.get_package_data()),
         _fix_data_paths(scheduler.setup.get_package_data()),
         _fix_data_paths(database_legacy.setup.get_package_data()),
-        _fix_data_paths(utils.setup.get_package_data())
+        _fix_data_paths(utils.setup.get_package_data()),
+        _fix_data_paths(hc_agent.setup.get_package_data())
     ])
 
 
@@ -132,6 +139,11 @@ def run():
           package_data=get_package_data(),
           packages=get_packages(),
           scripts=get_scripts(),
+          entry_points={
+              'console_scripts': [
+                  'hc-agent=hc_agent.cli.main:main',
+              ],
+          },
           data_files=get_data_files(),
           cmdclass=cmdclass,
           command_options={'build_doc': {'source_dir':
