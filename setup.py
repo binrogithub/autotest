@@ -19,7 +19,7 @@ import mirror.setup
 import installation_support.setup
 
 # pylint: disable=E0611
-from distutils.core import setup
+from setuptools import setup
 
 from sphinx.setup_command import BuildDoc
 cmdclass = {'build_doc': BuildDoc}
@@ -133,6 +133,7 @@ def run():
           packages=get_packages(),
           scripts=get_scripts(),
           data_files=get_data_files(),
+          extras_require={'test': ['pytest']},
           cmdclass=cmdclass,
           command_options={'build_doc': {'source_dir':
                                          ('setup.py', 'documentation/source')}}
